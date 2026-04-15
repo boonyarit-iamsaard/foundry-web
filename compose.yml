@@ -1,20 +1,20 @@
-name: 'finance-manager'
+name: 'foundry-core'
 
 services:
   postgres:
-    container_name: 'finance-manager-postgres'
+    container_name: 'foundry-core-postgres'
     image: 'docker.io/postgres:17-alpine'
     environment:
       POSTGRES_USER: ${DB_USERNAME:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
-      POSTGRES_DB: ${DB_DATABASE:-finance-manager}
+      POSTGRES_DB: ${DB_DATABASE:-foundry-core}
     ports:
       - '${DB_PORT:-5432}:5432'
     restart: 'always'
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - finance-manager-network
+      - foundry-core-network
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U ${DB_USERNAME:-postgres} -h localhost']
       interval: 5s
@@ -22,19 +22,19 @@ services:
       retries: 10
 
   mailpit:
-    container_name: 'finance-manager-mailpit'
+    container_name: 'foundry-core-mailpit'
     image: 'docker.io/axllent/mailpit:latest'
     ports:
       - '${MAIL_PORT:-1025}:1025'
       - '${MAILPIT_DASHBOARD_PORT:-8025}:8025'
     restart: 'always'
     networks:
-      - finance-manager-network
+      - foundry-core-network
 
 volumes:
   pgdata:
-    name: 'finance-manager-pgdata'
+    name: 'foundry-core-pgdata'
 
 networks:
-  finance-manager-network:
-    name: 'finance-manager-network'
+  foundry-core-network:
+    name: 'foundry-core-network'
