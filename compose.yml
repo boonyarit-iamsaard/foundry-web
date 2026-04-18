@@ -1,20 +1,20 @@
-name: 'foundry-core'
+name: 'foundry-web'
 
 services:
   postgres:
-    container_name: 'foundry-core-postgres'
+    container_name: 'foundry-web-postgres'
     image: 'docker.io/postgres:17-alpine'
     environment:
       POSTGRES_USER: ${DB_USERNAME:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
-      POSTGRES_DB: ${DB_DATABASE:-foundry-core}
+      POSTGRES_DB: ${DB_DATABASE:-foundry-web}
     ports:
       - '${DB_PORT:-5432}:5432'
     restart: 'always'
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
-      - foundry-core-network
+      - foundry-web-network
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U ${DB_USERNAME:-postgres} -h localhost']
       interval: 5s
@@ -22,19 +22,19 @@ services:
       retries: 10
 
   mailpit:
-    container_name: 'foundry-core-mailpit'
+    container_name: 'foundry-web-mailpit'
     image: 'docker.io/axllent/mailpit:latest'
     ports:
       - '${MAIL_PORT:-1025}:1025'
       - '${MAILPIT_DASHBOARD_PORT:-8025}:8025'
     restart: 'always'
     networks:
-      - foundry-core-network
+      - foundry-web-network
 
 volumes:
   pgdata:
-    name: 'foundry-core-pgdata'
+    name: 'foundry-web-pgdata'
 
 networks:
-  foundry-core-network:
-    name: 'foundry-core-network'
+  foundry-web-network:
+    name: 'foundry-web-network'

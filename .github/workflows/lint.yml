@@ -53,7 +53,6 @@ jobs:
           pnpm install --frozen-lockfile
 
       - name: Generate Application Key
-        #        run: php artisan key:generate --force
         run: php artisan key:generate
 
       - name: Generate Wayfinder Routes

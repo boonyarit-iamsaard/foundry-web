@@ -7,7 +7,7 @@
       "command": [
         "wsl.exe",
         "/usr/bin/php8.4",
-        "/home/boonyarit-iamsaard/workspace/personal/foundry-core/artisan",
+        "/home/boonyarit-iamsaard/workspace/personal/foundry-web/artisan",
         "boost:mcp"
       ]
     }
